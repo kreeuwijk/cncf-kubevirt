@@ -1,0 +1,11 @@
+apiVersion: snapshot.kubevirt.io/v1alpha1
+kind: VirtualMachineRestore
+metadata:
+  name: restore-vm-2
+  namespace: default
+spec:
+  target:
+    apiGroup: kubevirt.io
+    kind: VirtualMachine
+    name: ubuntu-2204
+  virtualMachineSnapshotName: snap-vm-2

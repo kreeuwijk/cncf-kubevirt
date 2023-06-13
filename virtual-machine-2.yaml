@@ -1,0 +1,70 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: ubuntu-2204
+  namespace: default
+  labels:
+    kubevirt.io/vm: ubuntu-2204
+spec:
+  dataVolumeTemplates:
+    - metadata:
+        name: ubuntu-2204-dv
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 50Gi
+        source:
+          registry:
+            url: >-
+              docker://gcr.io/spectro-images-public/release/vm-dashboard/os/ubuntu-container-disk:22.04
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        devices:
+          disks:
+            - disk:
+                bus: virtio
+              name: datavolume-os
+            - disk:
+                bus: virtio
+              name: cloudinitdisk
+          interfaces:
+            - masquerade: {}
+              model: virtio
+              name: default
+        machine:
+          type: q35
+        resources:
+          limits:
+            cpu: 2
+            memory: 2Gi
+          requests:
+            cpu: 2
+            memory: 2Gi
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - dataVolume:
+            name: ubuntu-2204-dv
+          name: datavolume-os
+        - cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              ssh_pwauth: True
+              chpasswd: { expire: False }
+              password: spectro
+              disable_root: false
+              runcmd:
+                - apt-get update
+                - apt-get install -y qemu-guest-agent
+                - systemctl start qemu-guest-agent
+          name: cloudinitdisk

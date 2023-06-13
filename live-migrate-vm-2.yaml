@@ -1,0 +1,7 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachineInstanceMigration
+metadata:
+  name: live-migrate-vm-2
+  namespace: default
+spec:
+  vmiName: ubuntu-2204
