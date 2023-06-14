@@ -2,7 +2,7 @@ apiVersion: snapshot.kubevirt.io/v1alpha1
 kind: VirtualMachineSnapshot
 metadata:
   name: snap-vm-2
-  namespace: default
+  namespace: cncf-webinar
 spec:
   source:
     apiGroup: kubevirt.io

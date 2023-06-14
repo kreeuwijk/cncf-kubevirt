@@ -2,7 +2,7 @@ apiVersion: snapshot.kubevirt.io/v1alpha1
 kind: VirtualMachineRestore
 metadata:
   name: restore-vm-2
-  namespace: default
+  namespace: cncf-webinar
 spec:
   target:
     apiGroup: kubevirt.io

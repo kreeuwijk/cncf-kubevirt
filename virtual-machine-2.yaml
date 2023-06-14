@@ -2,7 +2,7 @@ apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
   name: ubuntu-2204
-  namespace: default
+  namespace: cncf-webinar
   labels:
     kubevirt.io/vm: ubuntu-2204
 spec:
